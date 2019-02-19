@@ -1,6 +1,7 @@
 package com.nilswesthoff.nils.connectfour;
 
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -17,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
     private int column;
     private Button columnButton;
     private int discColor = Color.RED;
+    private FourInARowGame fourInARowGame = new FourInARowGame();
 
     private void info(String info) {
         infoTextView.setText(info);
@@ -44,16 +46,23 @@ public class MainActivity extends AppCompatActivity {
     public void columnButtonClicked(View view) {
         columnButton = (Button) view;
         column = Integer.parseInt(columnButton.getText().toString());
-        // further code to make the move and process the row returned
 
+//        int row = 6;
+//        while (row > 0 && ((ColorDrawable) getBoardImageView(row - 1,
+//                column - 1).getBackground()).getColor() != Color.parseColor("#bbbbbb"))
+//            row--;
+
+        int row = fourInARowGame.dropDisc(column);
+
+        if (row == 1) columnButton.setEnabled(false);
         if (discColor == Color.RED) {
-            showDisc(6, column, discColor);
+            showDisc(row, column, discColor);
             discColor = Color.BLUE;
-            info("Next move by Player 2");
+            info("Next move by Blue Player");
         } else {
-            showDisc(6, column, discColor);
+            showDisc(row, column, discColor);
             discColor = Color.RED;
-            info("Next move by Player 1");
+            info("Next move by Red Player");
         }
     }
 }
